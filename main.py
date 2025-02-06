@@ -3,7 +3,7 @@ import re
 import create_bin
 
 # Command to start the cloudflared server
-command = ["cloudflared/cloudflared-windows-amd64.exe", "tunnel", "--url", "http://127.0.0.1:5000"]
+command = ["cloudflared", "tunnel", "--url", "http://127.0.0.1:5000"]
 
 # Start the subprocess
 process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
