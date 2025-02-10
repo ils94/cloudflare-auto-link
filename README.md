@@ -62,7 +62,6 @@ URL=http://127.0.0.1:XXXXX  # Replace "XXXXX" with the actual port number
 
 ```bash
 python main.py
-
 ```
 
 👉 The Cloudflare Tunnel will start, and the script will automatically update the Gist with the latest URL. 🎉
