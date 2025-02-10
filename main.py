@@ -3,27 +3,33 @@ import re
 import create_gist
 import global_variables
 
-# Command to start the cloudflared server
-command = [global_variables.CLOUDFLARED_PATH, "tunnel", "--url", global_variables.URL]
 
-# Start the subprocess
-process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+def main():
+    # Command to start the cloudflared server
+    command = [global_variables.CLOUDFLARED_PATH, "tunnel", "--url", global_variables.URL]
 
-# Regex pattern to match the URL
-url_pattern = r"https://[a-zA-Z0-9\-]+\.trycloudflare\.com"
+    # Start the subprocess
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
-while True:
-    # Read a line from stderr (cloudflared logs to stderr)
-    line = process.stderr.readline()
+    # Regex pattern to match the URL
+    url_pattern = r"https://[a-zA-Z0-9\-]+\.trycloudflare\.com"
 
-    # Print the line (for debugging)
-    print(line, end="")
+    while True:
+        # Read a line from stderr (cloudflared logs to stderr)
+        line = process.stderr.readline()
 
-    # Search for the URL in the line
-    match = re.search(url_pattern, line)
+        # Print the line (for debugging)
+        print(line, end="")
 
-    if match:
-        url = match.group(0)
-        print("\n\n")
-        create_gist.publish_link_gist(url)
-        print("\n\n")
+        # Search for the URL in the line
+        match = re.search(url_pattern, line)
+
+        if match:
+            url = match.group(0)
+            print("\n\n")
+            create_gist.publish_link_gist(url)
+            print("\n\n")
+
+
+if __name__ == "__main__":
+    main()
