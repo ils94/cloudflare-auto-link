@@ -10,3 +10,5 @@ GIST_ID = os.getenv("GIST_ID")
 CLOUDFLARED_PATH = os.getenv("CLOUDFLARED_PATH")
 
 URL = os.getenv("URL")
+
+GISTURL = os.getenv("GISTURL")

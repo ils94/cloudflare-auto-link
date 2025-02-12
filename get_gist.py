@@ -1,32 +1,17 @@
 import requests
-import json
 import global_variables
 
 
 def get_link_from_gist():
-    GITHUB_TOKEN = global_variables.GITHUB_TOKEN
-    GIST_ID = global_variables.GIST_ID
+    # URL to the raw JSON file
+    url = global_variables.GISTURL
 
-    # Gist API URL
-    url = f"https://api.github.com/gists/{GIST_ID}"
-
-    # Headers with authentication
-    headers = {
-        "Authorization": f"token {GITHUB_TOKEN}",
-        "Accept": "application/vnd.github.v3+json"
-    }
-
-    # Make a GET request to fetch the Gist
-    response = requests.get(url, headers=headers)
+    # Make a GET request to fetch the JSON
+    response = requests.get(url)
 
     if response.status_code == 200:
-        gist_data = response.json()
-
-        # Extract the file content (assuming "cloudflare_link.json" is the filename)
-        file_content = gist_data["files"]["cloudflare_link.json"]["content"]
-
         # Parse JSON content
-        data = json.loads(file_content)
+        data = response.json()
 
         # Get the Cloudflare link
         cloudflare_link = data.get("cloudflare_link")
@@ -34,8 +19,5 @@ def get_link_from_gist():
         print("Cloudflare Link:", cloudflare_link)
         return cloudflare_link
     else:
-        print("Error fetching Gist:", response.text)
+        print("Error fetching JSON:", response.text)
         return None
-
-
-link = get_link_from_gist()
